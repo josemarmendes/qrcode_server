@@ -35,19 +35,16 @@ public class DocumentoQrCode {
 	@Column(name = "campo", columnDefinition = "text")
 	private String campo;
 	
-	@Column(name = "valor_chave")
-	private Integer valorChave;
-	
 	@Column(name = "chave", columnDefinition = "text")
 	private String chave;
-
+	
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "hash", updatable = false, unique = true, nullable = false)
-	private UUID hash;
+	@Column(name = "valor_chave", updatable = false, unique = true, nullable = false)
+	private UUID valorChave;
 
 	@Column(name = "data_criacao")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataCriacao;
+	private Date dataCriacao = new Date();
 
 	public Integer getDocumentoQrcodeId() {
 		return documentoQrcodeId;
@@ -81,20 +78,12 @@ public class DocumentoQrCode {
 		this.chave = chave;
 	}
 
-	public Integer getValorChave() {
+	public UUID getValorChave() {
 		return valorChave;
 	}
 
-	public void setValorChave(Integer valorChave) {
+	public void setValorChave(UUID valorChave) {
 		this.valorChave = valorChave;
-	}
-
-	public UUID getHash() {
-		return hash;
-	}
-
-	public void setHash(UUID hash) {
-		this.hash = hash;
 	}
 
 	public Date getDataCriacao() {
@@ -113,7 +102,6 @@ public class DocumentoQrCode {
 		result = prime * result + ((chave == null) ? 0 : chave.hashCode());
 		result = prime * result + ((dataCriacao == null) ? 0 : dataCriacao.hashCode());
 		result = prime * result + ((documentoQrcodeId == null) ? 0 : documentoQrcodeId.hashCode());
-		result = prime * result + ((hash == null) ? 0 : hash.hashCode());
 		result = prime * result + ((tabela == null) ? 0 : tabela.hashCode());
 		result = prime * result + ((valorChave == null) ? 0 : valorChave.hashCode());
 		return result;
@@ -148,11 +136,6 @@ public class DocumentoQrCode {
 				return false;
 		} else if (!documentoQrcodeId.equals(other.documentoQrcodeId))
 			return false;
-		if (hash == null) {
-			if (other.hash != null)
-				return false;
-		} else if (!hash.equals(other.hash))
-			return false;
 		if (tabela == null) {
 			if (other.tabela != null)
 				return false;
@@ -165,6 +148,5 @@ public class DocumentoQrCode {
 			return false;
 		return true;
 	}
-
 	
 }

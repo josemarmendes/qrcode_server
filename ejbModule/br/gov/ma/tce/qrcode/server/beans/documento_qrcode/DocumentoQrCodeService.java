@@ -1,12 +1,15 @@
 package br.gov.ma.tce.qrcode.server.beans.documento_qrcode;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
+import com.google.zxing.WriterException;
 
 import br.gov.ma.tce.qrcode.server.util.documento_qrcode.ZxingUtil;
 
@@ -18,13 +21,21 @@ public class DocumentoQrCodeService {
 
 	@EJB
 	private DocumentoQrCodeFacadeBean documentoQrCodeFacadeBean;
-
-	public void geraQrcode(String text, String url, OutputStream outputStream) throws Exception {
-			
-		outputStream.write(ZxingUtil.getQRCodeImage(text, url, 150, 150));
-		outputStream.flush();
-		outputStream.close();
 	
+	public byte[] salvaDocumento(String nomeTabela, String nomeCampo, String chave) {
+		
+		DocumentoQrCode qrCode = new DocumentoQrCode();
+		
+		qrCode.setTabela(nomeTabela);
+		qrCode.setCampo(nomeCampo);
+		qrCode.setChave(chave);
+		
+		if(qrCode != null) {
+			documentoQrCodeFacadeBean.insert(qrCode);
+				
+		}
+		return ZxingUtil.getQRCodeImage();
+		
 	}
 
 }
